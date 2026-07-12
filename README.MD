@@ -1,52 +1,68 @@
 # Python Simple Calculator
 
-A command-line calculator built in Python to practice core programming concepts through a hands-on project.
+A Python calculator project built to learn core programming concepts and desktop GUI development. The project started as a terminal-based calculator and will evolve into a Tkinter GUI application.
 
 ## Features
+
+### Terminal Version (Completed)
 
 - Addition
 - Subtraction
 - Multiplication
 - Division
+- Menu-driven interface
 - Input validation
 - Exception handling
 - Division by zero handling
-- Menu-driven interface
+- Modular project structure
+
+### GUI Version (Coming Soon)
+
+- Graphical user interface using Tkinter
+- Button-based calculator
+- User-friendly input fields
+- Error dialog boxes
+- Improved layout and styling
 
 ## Technologies Used
 
 - Python 3
+- Tkinter (GUI - In Progress)
 
-## Learning Objectives
-
-This project was built to strengthen understanding of:
+## What I Learned
 
 - Functions
+- Modules and packages
+- Dictionary dispatch
 - Loops
-- Conditional statements
-- User input handling
+- Input validation
 - Exception handling
 - Modular programming
+- Basic Git and GitHub workflow
 
 ## Project Structure
 
 ```text
 python-simple-calculator/
-├── calculator.py
+├── main.py
+├── main_menu.py
+├── modules/
+│   └── operations.py
+├── utils/
+│   └── validate.py
 ├── README.md
 └── .gitignore
 ```
 
 ## Future Improvements
 
-- Exponent operation
-- Modulus operation
-- Floor division
-- Square root
+- Tkinter GUI
+- Scientific calculator functions
 - Calculation history
 - Save history to a file
-- Colored terminal output
-- Continuous calculations
+- Keyboard shortcuts
+- Theme support (Light/Dark)
+- Expression evaluation
 
 ## Author
 
