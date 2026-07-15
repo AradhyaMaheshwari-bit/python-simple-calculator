@@ -16,11 +16,15 @@ class Calculator:
         self.pending_operator = None
         self.waiting_for_new_number = False
         self.error_state = False
+        self.expression = ""
 
     def press_digit(self, digit):
             if self.error_state:
                 self.press_clear()
+
             if self.waiting_for_new_number:
+                if self.stored_value is None:
+                    self.expression = ""
                 if digit == ".":
                     self.display = "0."
                 else:
@@ -45,6 +49,7 @@ class Calculator:
         self.pending_operator = None
         self.waiting_for_new_number = False
         self.error_state = False
+        self.expression = ""
 
     def press_backspace(self):
         '''
@@ -59,6 +64,8 @@ class Calculator:
             self.display = self.display[:-1]
         if self.display == "":
             self.display = "0"
+        if self.pending_operator is None:
+            self.expression = ""
 
     def press_operator(self, operator):
         if self.error_state:
@@ -71,16 +78,16 @@ class Calculator:
             self._evaluate_pending_operation()
         self.pending_operator = operator
         self.waiting_for_new_number = True
-
+        self.expression = f"{self._format_result(self.stored_value)} {self.pending_operator}"
 
     def _evaluate_pending_operation(self):
         if self.pending_operator == "+":
             result = modules.operations.add(self.stored_value, float(self.display))
         elif self.pending_operator == "-":
             result = modules.operations.subtract(self.stored_value, float(self.display))
-        elif self.pending_operator == "*":
+        elif self.pending_operator == "×":
             result = modules.operations.multiply(self.stored_value, float(self.display))
-        elif self.pending_operator == "/":
+        elif self.pending_operator == "÷":
             result = modules.operations.divide(self.stored_value, float(self.display))
         self.display = self._format_result(result)
         self.stored_value = result
@@ -89,10 +96,13 @@ class Calculator:
         if self.error_state:
                 self.press_clear()
         if self.pending_operator is not None:
+            self.expression = f"{self._format_result(self.stored_value)} {self.pending_operator} {self.display} ="
             self._evaluate_pending_operation()
+
         self.stored_value = None
         self.pending_operator = None
         self.waiting_for_new_number = True
+
 
     def _format_result(self, result):
         if result.is_integer():

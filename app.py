@@ -17,30 +17,39 @@ def create_app():
     def digit_pressed(digit):
         calc.press_digit(digit)
         display_text.set(calc.display)
+        expression_label.config(text=calc.expression)
 
     def clear_pressed():
         calc.press_clear()
         display_text.set(calc.display)
+        expression_label.config(text=calc.expression)
 
     def backspace_pressed():
         calc.press_backspace()
         display_text.set(calc.display)
+        expression_label.config(text=calc.expression)
 
     def operator_pressed(operator):
         try:
             calc.press_operator(operator)
             display_text.set(calc.display)
+            expression_label.config(text=calc.expression)
         except ZeroDivisionError as e:
-                 display_text.set(f"{e}")
-                 calc.error_state = True
+                display_text.set(f"{e}")
+                calc.error_state = True
+                calc.expression = ""
+                expression_label.config(text=calc.expression)
 
     def equal_pressed():
         try:
             calc.press_equal()
             display_text.set(calc.display)
+            expression_label.config(text=calc.expression)
         except ZeroDivisionError as e:
-                 display_text.set(f"{e}")
-                 calc.error_state = True
+                display_text.set(f"{e}")
+                calc.error_state = True
+                calc.expression = ""
+                expression_label.config(text=calc.expression)
 
     # ============
     # Display area
@@ -48,6 +57,9 @@ def create_app():
 
     display_frame = tk.Frame(root)
     display_frame.pack(padx=20)
+
+    expression_label = tk.Label(display_frame, text="")
+    expression_label.grid(row=0, column=1, pady=5)
 
     display_text = tk.StringVar()
     display_entry = tk.Entry(
@@ -57,7 +69,7 @@ def create_app():
         justify="right",
         font=("Segoe UI", 16)
     )
-    display_entry.grid(row=0, column=1, pady=5)
+    display_entry.grid(row=1, column=1, pady=5)
     display_text.set(calc.display)
     # ==============
     # Buttons area
@@ -72,8 +84,8 @@ def create_app():
     decimal_button = tk.Button(buttons_frame, text=".", width=5, command=lambda: digit_pressed("."))
     add_button = tk.Button(buttons_frame, text="+", width=5, command=lambda: operator_pressed("+"))
     subtract_button = tk.Button(buttons_frame, text="-", width=5, command=lambda: operator_pressed("-"))
-    multiply_button = tk.Button(buttons_frame, text="×", width=5, command=lambda: operator_pressed("*"))
-    divide_button = tk.Button(buttons_frame, text="÷", width=5, command=lambda: operator_pressed("/"))
+    multiply_button = tk.Button(buttons_frame, text="×", width=5, command=lambda: operator_pressed("×"))
+    divide_button = tk.Button(buttons_frame, text="÷", width=5, command=lambda: operator_pressed("÷"))
     one_button = tk.Button(buttons_frame, text="1", width=5, command=lambda: digit_pressed("1"))
     two_button = tk.Button(buttons_frame, text="2", width=5, command=lambda: digit_pressed("2"))
     three_button = tk.Button(buttons_frame, text="3", width=5, command=lambda: digit_pressed("3"))
