@@ -82,7 +82,7 @@ class Calculator:
             result = modules.operations.multiply(self.stored_value, float(self.display))
         elif self.pending_operator == "/":
             result = modules.operations.divide(self.stored_value, float(self.display))
-        self.display = str(result)
+        self.display = self._format_result(result)
         self.stored_value = result
 
     def press_equal(self):
@@ -93,3 +93,9 @@ class Calculator:
         self.stored_value = None
         self.pending_operator = None
         self.waiting_for_new_number = True
+
+    def _format_result(self, result):
+        if result.is_integer():
+            return str(int(result))
+        else:
+            return str(result)
