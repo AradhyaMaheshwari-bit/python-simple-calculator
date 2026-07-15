@@ -1,11 +1,8 @@
-from main_menu import main_menu
+from app import create_app
 
 def main():
-    print("="*30)
-    text = "Simple Calculator"
-    print(f"{text:^30}")
-    print("="*30)
-    main_menu()
+    app = create_app()
+    app.mainloop()
 
 if __name__ == "__main__":
     main()
