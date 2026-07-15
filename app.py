@@ -32,6 +32,7 @@ def create_app():
             display_text.set(calc.display)
         except ZeroDivisionError as e:
                  display_text.set(f"{e}")
+                 calc.error_state = True
 
     def equal_pressed():
         try:
@@ -39,6 +40,7 @@ def create_app():
             display_text.set(calc.display)
         except ZeroDivisionError as e:
                  display_text.set(f"{e}")
+                 calc.error_state = True
 
     # ============
     # Display area

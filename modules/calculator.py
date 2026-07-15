@@ -15,7 +15,11 @@ class Calculator:
         self.stored_value = None
         self.pending_operator = None
         self.waiting_for_new_number = False
+        self.error_state = False
+
     def press_digit(self, digit):
+            if self.error_state:
+                self.press_clear()
             if self.waiting_for_new_number:
                 if digit == ".":
                     self.display = "0."
@@ -23,7 +27,6 @@ class Calculator:
                     self.display = digit
                 self.waiting_for_new_number = False
                 return
-
             if self.display == "0":
                 if digit == ".":
                     self.display = "0."
@@ -41,6 +44,7 @@ class Calculator:
         self.stored_value = None
         self.pending_operator = None
         self.waiting_for_new_number = False
+        self.error_state = False
 
     def press_backspace(self):
         '''
@@ -49,12 +53,16 @@ class Calculator:
         2. Otherwise, remove the last character.
         3. After removing it, if the display becomes empty, replace it with "0"
         '''
+        if self.error_state:
+                self.press_clear()
         if self.display != "0":
             self.display = self.display[:-1]
         if self.display == "":
             self.display = "0"
 
     def press_operator(self, operator):
+        if self.error_state:
+            return
         if self.stored_value is None:
             self.stored_value = float(self.display)
         elif self.waiting_for_new_number:
@@ -78,6 +86,8 @@ class Calculator:
         self.stored_value = result
 
     def press_equal(self):
+        if self.error_state:
+                self.press_clear()
         if self.pending_operator is not None:
             self._evaluate_pending_operation()
         self.stored_value = None
