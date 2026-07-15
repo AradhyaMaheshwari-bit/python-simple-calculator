@@ -57,10 +57,13 @@ class Calculator:
     def press_operator(self, operator):
         if self.stored_value is None:
             self.stored_value = float(self.display)
+        elif self.waiting_for_new_number:
+            pass
         else:
             self._evaluate_pending_operation()
         self.pending_operator = operator
         self.waiting_for_new_number = True
+
 
     def _evaluate_pending_operation(self):
         if self.pending_operator == "+":
