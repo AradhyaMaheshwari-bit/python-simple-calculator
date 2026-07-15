@@ -7,7 +7,7 @@ Rules:
 5. A decimal always needs a leading zero.
 6. Only one decimal point is allowed in the current number.
 """
-
+import modules.operations
 
 class Calculator:
     def __init__(self):
@@ -55,8 +55,28 @@ class Calculator:
             self.display = "0"
 
     def press_operator(self, operator):
-        self.stored_value = float(self.display)
+        if self.stored_value is None:
+            self.stored_value = float(self.display)
+        else:
+            self._evaluate_pending_operation()
         self.pending_operator = operator
         self.waiting_for_new_number = True
 
+    def _evaluate_pending_operation(self):
+        if self.pending_operator == "+":
+            result = modules.operations.add(self.stored_value, float(self.display))
+        elif self.pending_operator == "-":
+            result = modules.operations.subtract(self.stored_value, float(self.display))
+        elif self.pending_operator == "*":
+            result = modules.operations.multiply(self.stored_value, float(self.display))
+        elif self.pending_operator == "/":
+            result = modules.operations.divide(self.stored_value, float(self.display))
+        self.display = str(result)
+        self.stored_value = result
 
+    def press_equal(self):
+        if self.pending_operator is not None:
+            self._evaluate_pending_operation()
+        self.stored_value = None
+        self.pending_operator = None
+        self.waiting_for_new_number = True

@@ -5,8 +5,6 @@ press_<button_type> == calc to calculator.py
 
 import tkinter as tk
 from modules.calculator import Calculator
-    # from tkinter import messagebox
-    # import modules.operations
 
 def create_app():
 
@@ -30,6 +28,10 @@ def create_app():
 
     def operator_pressed(operator):
         calc.press_operator(operator)
+        display_text.set(calc.display)
+
+    def equal_pressed():
+        calc.press_equal()
         display_text.set(calc.display)
 
     # ============
@@ -58,7 +60,7 @@ def create_app():
 
     clear_button = tk.Button(buttons_frame, text="AC", width=12, command=clear_pressed)
     backspace_button = tk.Button(buttons_frame, text="⌫", width=5, command=backspace_pressed)
-    enter_button = tk.Button(buttons_frame, text="=", width=5)
+    enter_button = tk.Button(buttons_frame, text="=", width=5, command=equal_pressed)
     decimal_button = tk.Button(buttons_frame, text=".", width=5, command=lambda: digit_pressed("."))
     add_button = tk.Button(buttons_frame, text="+", width=5, command=lambda: operator_pressed("+"))
     subtract_button = tk.Button(buttons_frame, text="-", width=5, command=lambda: operator_pressed("-"))
