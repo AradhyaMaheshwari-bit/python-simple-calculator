@@ -1,29 +1,38 @@
 # 🧮 Python Simple Calculator
 
-A desktop calculator built with **Python** and **Tkinter** to practice core programming concepts, modular application design, and GUI development.
+A desktop calculator built with **Python** and **Tkinter** to practice software design, event-driven programming, and GUI development.
 
-The project began as a **terminal-based calculator (v1.0)** and was later redesigned into a **desktop GUI application (v2.0)** while preserving clean project architecture and reusable business logic.
+The project began as a **terminal-based calculator (v1.0)**, evolved into a **Tkinter desktop application (v2.0)**, and was redesigned in **v3.0** to behave like a real calculator using an internal calculation engine and state management.
 
-![Status](https://img.shields.io/badge/Status-Completed-success)
-![Python](https://img.shields.io/badge/Python-3.x-blue?logo=python&logoColor=white)
+![Status](https://img.shields.io/badge/Status-Active_Development-brightgreen)
+![Python](https://img.shields.io/badge/Python-3.14.3-blue?logo=python&logoColor=white)
+![Version](https://img.shields.io/badge/Version-v3.0-orange)
 ![GUI](https://img.shields.io/badge/GUI-Tkinter-green)
+![License](https://img.shields.io/badge/License-MIT-purple)
+![Last Commit](https://img.shields.io/github/last-commit/AradhyaMaheshwari-bit/python-simple-calculator)
 
 ---
 
 ## ✨ Features
 
-### GUI Calculator (v2.0)
+### Calculator
 
 - ➕ Addition
 - ➖ Subtraction
 - ✖️ Multiplication
 - ➗ Division
+- 🔢 Calculator-style digit input
+- 🔄 Sequential calculations
+- ⌫ Backspace support
+- 🧹 All Clear (AC)
+- 🔢 Decimal number support
+- 🚫 Prevents multiple decimal points
+- 📄 Displays current calculation expression
+- 🎯 Automatic input state management
+- ⚠️ Division-by-zero handling
+- 🔁 Error recovery
+- ✨ Clean result formatting (e.g. `12` instead of `12.0`)
 - 🖥️ Desktop GUI built with Tkinter
-- ✅ Input validation
-- ⚠️ Error dialogs using MessageBox
-- 🧹 Clear button
-- 🎯 Automatic focus management
-- 🔄 Dynamic result updates
 - 🧩 Modular architecture
 
 ---
@@ -37,17 +46,17 @@ The project began as a **terminal-based calculator (v1.0)** and was later redesi
 
 ## 📚 Concepts Practiced
 
-- Functions
-- Modules & Packages
-- Higher-order Functions
+- Object-Oriented Programming
+- State Management
 - Event-driven Programming
+- Callback Functions
 - Lambda Functions
 - Exception Handling
-- Input Validation
+- Helper Functions
+- Modular Programming
+- Separation of Concerns
 - Tkinter GUI Development
 - Layout Management (`pack()` & `grid()`)
-- Message Boxes
-- Modular Programming
 - Git & GitHub Workflow
 
 ---
@@ -79,9 +88,8 @@ python main.py
 ```text
 python-simple-calculator/
 ├── modules/
+│   ├── calculator.py
 │   └── operations.py
-├── utils/
-│   └── validate.py
 ├── app.py
 ├── main.py
 ├── README.md
@@ -92,40 +100,53 @@ python-simple-calculator/
 
 ## 🚀 Version History
 
-### v1.0-terminal
+### v1.0 — Terminal Calculator
 
-- Terminal-based calculator
-- Menu-driven interface
-- Modular architecture
+- Menu-driven calculator
 - Input validation
+- Modular arithmetic functions
 - Exception handling
 
-### v2.0-gui
+### v2.0 — Desktop GUI
 
-- Tkinter desktop application
-- Modern GUI
-- Error dialogs
+- Tkinter interface
+- Calculator buttons
+- Event-driven callbacks
 - Clear button
-- Improved user experience
-- Refactored application entry point
+- Improved project structure
+
+### v3.0 — Calculator Engine
+
+- Calculator input state management
+- Sequential calculations
+- Calculation engine
+- Repeated operator handling
+- Division-by-zero recovery
+- Expression display
+- Display formatting
+- Backspace support
+- Improved modular architecture
 
 ---
 
-## 🔮 Planned Features (v3.0)
+## 🔮 Planned Features
 
-- Calculator-style interface
-- Keyboard-only operation
-- Numpad support
-- Scientific operations
-- Expression evaluation
+### v3.1
+
+- Refactor repetitive callbacks
+- Introduce `update_display()`
+- Generate buttons from a data structure
+- Keyboard support
+- Improve display layout
+- General code cleanup
+
+### Future
+
+- Chain operation improvements
+- Responsive window resizing
+- Scientific calculator mode
 - Calculation history
 - Light/Dark theme
-
----
-
-## 📸 Screenshot
-
-![GUI Calculator](assets/gui-calculator.png)
 
 ---
 
@@ -134,11 +155,13 @@ python-simple-calculator/
 This project helped me understand:
 
 - Designing modular Python applications
-- Separating business logic from the user interface
-- Building event-driven desktop applications
-- Creating reusable callback functions
-- Handling exceptions gracefully in GUI applications
-- Maintaining meaningful Git history through incremental development
+- Separating business logic from the GUI
+- Building a calculator state machine
+- Event-driven GUI programming with Tkinter
+- Exception handling and recovery
+- Helper functions and code reuse
+- Writing maintainable, incremental Git commits
+- Organizing a project through versioned development
 
 ---
 
