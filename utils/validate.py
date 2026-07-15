@@ -8,3 +8,10 @@ def validate_operands(a, b):
         return True
     except ValueError:
         return False
+
+def is_number(value):
+    try:
+        float(value)
+        return True
+    except ValueError:
+        return False   
