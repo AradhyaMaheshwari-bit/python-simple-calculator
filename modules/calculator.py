@@ -12,8 +12,18 @@ Rules:
 class Calculator:
     def __init__(self):
         self.display = "0"
-
+        self.stored_value = None
+        self.pending_operator = None
+        self.waiting_for_new_number = False
     def press_digit(self, digit):
+            if self.waiting_for_new_number:
+                if digit == ".":
+                    self.display = "0."
+                else:
+                    self.display = digit
+                self.waiting_for_new_number = False
+                return
+
             if self.display == "0":
                 if digit == ".":
                     self.display = "0."
@@ -28,6 +38,9 @@ class Calculator:
 
     def press_clear(self):
         self.display = "0"
+        self.stored_value = None
+        self.pending_operator = None
+        self.waiting_for_new_number = False
 
     def press_backspace(self):
         '''
@@ -40,4 +53,10 @@ class Calculator:
             self.display = self.display[:-1]
         if self.display == "":
             self.display = "0"
+
+    def press_operator(self, operator):
+        self.stored_value = float(self.display)
+        self.pending_operator = operator
+        self.waiting_for_new_number = True
+
 

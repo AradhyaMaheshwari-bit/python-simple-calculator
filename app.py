@@ -28,6 +28,10 @@ def create_app():
         calc.press_backspace()
         display_text.set(calc.display)
 
+    def operator_pressed(operator):
+        calc.press_operator(operator)
+        display_text.set(calc.display)
+
     # ============
     # Display area
     # ============
@@ -56,10 +60,10 @@ def create_app():
     backspace_button = tk.Button(buttons_frame, text="⌫", width=5, command=backspace_pressed)
     enter_button = tk.Button(buttons_frame, text="=", width=5)
     decimal_button = tk.Button(buttons_frame, text=".", width=5, command=lambda: digit_pressed("."))
-    add_button = tk.Button(buttons_frame, text="+", width=5)
-    subtract_button = tk.Button(buttons_frame, text="-", width=5)
-    multiply_button = tk.Button(buttons_frame, text="×", width=5)
-    divide_button = tk.Button(buttons_frame, text="÷", width=5)
+    add_button = tk.Button(buttons_frame, text="+", width=5, command=lambda: operator_pressed("+"))
+    subtract_button = tk.Button(buttons_frame, text="-", width=5, command=lambda: operator_pressed("-"))
+    multiply_button = tk.Button(buttons_frame, text="×", width=5, command=lambda: operator_pressed("*"))
+    divide_button = tk.Button(buttons_frame, text="÷", width=5, command=lambda: operator_pressed("/"))
     one_button = tk.Button(buttons_frame, text="1", width=5, command=lambda: digit_pressed("1"))
     two_button = tk.Button(buttons_frame, text="2", width=5, command=lambda: digit_pressed("2"))
     three_button = tk.Button(buttons_frame, text="3", width=5, command=lambda: digit_pressed("3"))
