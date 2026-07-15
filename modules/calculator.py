@@ -25,3 +25,19 @@ class Calculator:
                         self.display += digit
                 else:
                     self.display += digit
+
+    def press_clear(self):
+        self.display = "0"
+
+    def press_backspace(self):
+        '''
+        Rules:
+        1. If the display is already "0" do nothing.
+        2. Otherwise, remove the last character.
+        3. After removing it, if the display becomes empty, replace it with "0"
+        '''
+        if self.display != "0":
+            self.display = self.display[:-1]
+        if self.display == "":
+            self.display = "0"
+

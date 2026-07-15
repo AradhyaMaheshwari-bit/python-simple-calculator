@@ -20,6 +20,14 @@ def create_app():
         calc.press_digit(digit)
         display_text.set(calc.display)
 
+    def clear_pressed():
+        calc.press_clear()
+        display_text.set(calc.display)
+
+    def backspace_pressed():
+        calc.press_backspace()
+        display_text.set(calc.display)
+
     # ============
     # Display area
     # ============
@@ -44,8 +52,8 @@ def create_app():
     buttons_frame = tk.Frame(root)
     buttons_frame.pack(pady=10)
 
-    clear_button = tk.Button(buttons_frame, text="AC", width=12)
-    backspace_button = tk.Button(buttons_frame, text="⌫", width=5)
+    clear_button = tk.Button(buttons_frame, text="AC", width=12, command=clear_pressed)
+    backspace_button = tk.Button(buttons_frame, text="⌫", width=5, command=backspace_pressed)
     enter_button = tk.Button(buttons_frame, text="=", width=5)
     decimal_button = tk.Button(buttons_frame, text=".", width=5, command=lambda: digit_pressed("."))
     add_button = tk.Button(buttons_frame, text="+", width=5)
