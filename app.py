@@ -1,4 +1,10 @@
+'''
+pressed_<button_type> == GUI to calc
+press_<button_type> == calc to calculator.py
+'''
+
 import tkinter as tk
+from modules.calculator import Calculator
     # from tkinter import messagebox
     # import modules.operations
 
@@ -8,6 +14,11 @@ def create_app():
     root.title("Simple Calculator")
     root.geometry("420x320")
     root.resizable(False, False)
+    calc = Calculator()
+
+    def digit_pressed(digit):
+        calc.press_digit(digit)
+        display_text.set(calc.display)
 
     # ============
     # Display area
@@ -25,7 +36,7 @@ def create_app():
         font=("Segoe UI", 16)
     )
     display_entry.grid(row=0, column=1, pady=5)
-
+    display_text.set(calc.display)
     # ==============
     # Buttons area
     # ==============
@@ -36,21 +47,21 @@ def create_app():
     clear_button = tk.Button(buttons_frame, text="AC", width=12)
     backspace_button = tk.Button(buttons_frame, text="⌫", width=5)
     enter_button = tk.Button(buttons_frame, text="=", width=5)
-    decimal_button = tk.Button(buttons_frame, text=".", width=5)
+    decimal_button = tk.Button(buttons_frame, text=".", width=5, command=lambda: digit_pressed("."))
     add_button = tk.Button(buttons_frame, text="+", width=5)
     subtract_button = tk.Button(buttons_frame, text="-", width=5)
     multiply_button = tk.Button(buttons_frame, text="×", width=5)
     divide_button = tk.Button(buttons_frame, text="÷", width=5)
-    one_button = tk.Button(buttons_frame, text="1", width=5)
-    two_button = tk.Button(buttons_frame, text="2", width=5)
-    three_button = tk.Button(buttons_frame, text="3", width=5)
-    four_button = tk.Button(buttons_frame, text="4", width=5)
-    five_button = tk.Button(buttons_frame, text="5", width=5)
-    six_button = tk.Button(buttons_frame, text="6", width=5)
-    seven_button = tk.Button(buttons_frame, text="7", width=5)
-    eight_button = tk.Button(buttons_frame, text="8", width=5)
-    nine_button = tk.Button(buttons_frame, text="9", width=5)
-    zero_button = tk.Button(buttons_frame, text="0", width=12)
+    one_button = tk.Button(buttons_frame, text="1", width=5, command=lambda: digit_pressed("1"))
+    two_button = tk.Button(buttons_frame, text="2", width=5, command=lambda: digit_pressed("2"))
+    three_button = tk.Button(buttons_frame, text="3", width=5, command=lambda: digit_pressed("3"))
+    four_button = tk.Button(buttons_frame, text="4", width=5, command=lambda: digit_pressed("4"))
+    five_button = tk.Button(buttons_frame, text="5", width=5, command=lambda: digit_pressed("5"))
+    six_button = tk.Button(buttons_frame, text="6", width=5, command=lambda: digit_pressed("6"))
+    seven_button = tk.Button(buttons_frame, text="7", width=5, command=lambda: digit_pressed("7"))
+    eight_button = tk.Button(buttons_frame, text="8", width=5, command=lambda: digit_pressed("8"))
+    nine_button = tk.Button(buttons_frame, text="9", width=5, command=lambda: digit_pressed("9"))
+    zero_button = tk.Button(buttons_frame, text="0", width=12, command=lambda: digit_pressed("0"))
 
     clear_button.grid(row=0, column=0, padx=0, columnspan=2)
     backspace_button.grid(row=0, column=2, padx=0)
