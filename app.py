@@ -27,12 +27,18 @@ def create_app():
         display_text.set(calc.display)
 
     def operator_pressed(operator):
-        calc.press_operator(operator)
-        display_text.set(calc.display)
+        try:
+            calc.press_operator(operator)
+            display_text.set(calc.display)
+        except ZeroDivisionError as e:
+                 display_text.set(f"{e}")
 
     def equal_pressed():
-        calc.press_equal()
-        display_text.set(calc.display)
+        try:
+            calc.press_equal()
+            display_text.set(calc.display)
+        except ZeroDivisionError as e:
+                 display_text.set(f"{e}")
 
     # ============
     # Display area
@@ -45,7 +51,7 @@ def create_app():
     display_entry = tk.Entry(
         display_frame,
         textvariable=display_text,
-        width=30,
+        width=25,
         justify="right",
         font=("Segoe UI", 16)
     )
