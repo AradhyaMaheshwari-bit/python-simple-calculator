@@ -55,6 +55,10 @@ class Calculator:
         self.last_operator = None
         self.last_operand = None
 
+    def press_clear_entry(self):
+        self.display = "0"
+        self.error_state = False
+
     def press_backspace(self):
         '''
         Rules:

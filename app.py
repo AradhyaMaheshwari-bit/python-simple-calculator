@@ -56,7 +56,8 @@ def create_app():
     buttons_frame.pack(pady=10)
 
     buttons = [
-        {"text": "AC", "type": "clear", "keys": ["Escape"], "row": 0, "column": 0, "width": 12, "columnspan": 2},
+        {"text": "AC", "type": "clear", "mode": "all", "keys": ["Escape"], "row": 0, "column": 0},
+        {"text": "CE", "type": "clear", "mode": "entry", "keys": ["grave"], "row": 0, "column": 1},
         {"text": "⌫", "type": "backspace", "keys": ["BackSpace"], "row": 0, "column": 2},
         {"text": "÷", "type": "operator", "keys": ["slash"], "row": 0, "column": 3},
         {"text": "7", "type": "digit", "keys": ["7"], "row": 1, "column": 0},
@@ -82,6 +83,10 @@ def create_app():
 
     def clear_pressed():
         calc.press_clear()
+        update_display()
+
+    def clear_entry_pressed():
+        calc.press_clear_entry()
         update_display()
 
     def backspace_pressed():
@@ -112,7 +117,10 @@ def create_app():
         elif button_type == "operator":
             command = lambda text=button_text: operator_pressed(text)
         elif button_type == "clear":
-            command = clear_pressed
+            if button["mode"] == "all":
+                command = clear_pressed
+            else:
+                command = clear_entry_pressed
         elif button_type == "backspace":
             command = backspace_pressed
         elif button_type == "equal":
