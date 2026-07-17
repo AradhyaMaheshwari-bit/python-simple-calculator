@@ -89,14 +89,16 @@ class Calculator:
         self.expression = f"{self._format_result(self.stored_value)} {self.pending_operator}"
 
     def _evaluate_pending_operation(self):
-        if self.pending_operator == "+":
-            result = modules.operations.add(self.stored_value, float(self.display))
-        elif self.pending_operator == "-":
-            result = modules.operations.subtract(self.stored_value, float(self.display))
-        elif self.pending_operator == "×":
-            result = modules.operations.multiply(self.stored_value, float(self.display))
-        elif self.pending_operator == "÷":
-            result = modules.operations.divide(self.stored_value, float(self.display))
+        operations = {
+            "+": modules.operations.add,
+            "-": modules.operations.subtract,
+            "×": modules.operations.multiply,
+            "÷": modules.operations.divide,
+        }
+        result = operations[str(self.pending_operator)](
+            self.stored_value,
+            float(self.display)
+        )
         self.display = self._format_result(result)
         self.stored_value = result
 
