@@ -34,8 +34,8 @@ def create_app():
         calc.expression = ""
         update_display()
 
-    expression_label = tk.Label(display_frame, text="")
-    expression_label.grid(row=0, column=1, pady=5)
+    expression_label = tk.Label(display_frame, text=calc.expression, anchor="e", justify="right",)
+    expression_label.grid(row=0, column=1, pady=5, sticky="ew")
 
     display_text = tk.StringVar()
     display_entry = tk.Entry(
