@@ -1,12 +1,12 @@
 # 🧮 Python Simple Calculator
 
-A desktop calculator built with **Python** and **Tkinter** to practice software design, event-driven programming, and GUI development.
+A desktop calculator built with **Python** and **Tkinter** to practice software design, event-driven programming, GUI development, and incremental software architecture.
 
-The project began as a **terminal-based calculator (v1.0)**, evolved into a **Tkinter desktop application (v2.0)**, and was redesigned in **v3.0** to behave like a real calculator using an internal calculation engine and state management.
+The project began as a **terminal-based calculator (v1.0)**, evolved into a **Tkinter desktop application (v2.0)**, introduced a dedicated **calculator engine with state management (v3.0)**, and was refactored into a cleaner, data-driven GUI architecture in **v3.1**.
 
 ![Status](https://img.shields.io/badge/Status-Active_Development-brightgreen)
 ![Python](https://img.shields.io/badge/Python-3.14.3-blue?logo=python&logoColor=white)
-![Version](https://img.shields.io/badge/Version-v3.0-orange)
+![Version](https://img.shields.io/badge/Version-v3.1-orange)
 ![GUI](https://img.shields.io/badge/GUI-Tkinter-green)
 ![License](https://img.shields.io/badge/License-MIT-purple)
 ![Last Commit](https://img.shields.io/github/last-commit/AradhyaMaheshwari-bit/python-simple-calculator)
@@ -34,6 +34,8 @@ The project began as a **terminal-based calculator (v1.0)**, evolved into a **Tk
 - ✨ Clean result formatting (e.g. `12` instead of `12.0`)
 - 🖥️ Desktop GUI built with Tkinter
 - 🧩 Modular architecture
+- ⚙️ Data-driven button generation
+- 🏷️ Button metadata for scalable GUI behavior
 
 ---
 
@@ -46,15 +48,18 @@ The project began as a **terminal-based calculator (v1.0)**, evolved into a **Tk
 
 ## 📚 Concepts Practiced
 
-- Object-Oriented Programming
+- Object-Oriented Programming (calculator engine)
 - State Management
 - Event-driven Programming
 - Callback Functions
-- Lambda Functions
+- Lambda Functions & Closures
 - Exception Handling
 - Helper Functions
+- Data-driven Programming
+- Dictionary-based Configuration
 - Modular Programming
 - Separation of Concerns
+- GUI Refactoring
 - Tkinter GUI Development
 - Layout Management (`pack()` & `grid()`)
 - Git & GitHub Workflow
@@ -127,26 +132,54 @@ python-simple-calculator/
 - Backspace support
 - Improved modular architecture
 
+### v3.1 — GUI Refactoring & UI Polish
+
+- Centralized display updates
+- Centralized error handling
+- Dynamic button generation
+- Data-driven button configuration
+- Button metadata (`type`)
+- Reduced duplicated GUI code
+- Improved callback organization
+- Cleaner and more maintainable architecture
+
 ---
 
-## 🔮 Planned Features
+## 🔮 Roadmap
 
-### v3.1
+### v3.2 — Keyboard & UX Improvements
 
-- Refactor repetitive callbacks
-- Introduce `update_display()`
-- Generate buttons from a data structure
-- Keyboard support
-- Improve display layout
-- General code cleanup
+- Keyboard shortcuts
+- Repeated equals (`=`)
+- Improved chain operations
+- Better operator replacement
+- General usability improvements
 
-### Future
+### v4.0 — Object-Oriented GUI
 
-- Chain operation improvements
-- Responsive window resizing
-- Scientific calculator mode
-- Calculation history
-- Light/Dark theme
+- Convert GUI into a class
+- Improve application architecture
+- Better separation of responsibilities
+
+### v5.0 — Expression Parser
+
+- BODMAS / operator precedence
+- Expression evaluation without `eval()`
+- Parentheses support
+
+### v5.1 — Scientific Calculator
+
+- Scientific functions
+- Advanced operators
+- Extended calculator interface
+
+### v6.0 ─ Advanced Calculator
+
+- History panel
+- Themes
+- Settings
+- Config file
+- Better UX
 
 ---
 
@@ -155,11 +188,13 @@ python-simple-calculator/
 This project helped me understand:
 
 - Designing modular Python applications
-- Separating business logic from the GUI
 - Building a calculator state machine
-- Event-driven GUI programming with Tkinter
+- Separating business logic from the GUI
+- Data-driven GUI design
+- Event-driven programming with Tkinter
+- Lambda closures and callback handling
+- Refactoring for maintainability
 - Exception handling and recovery
-- Helper functions and code reuse
 - Writing maintainable, incremental Git commits
 - Organizing a project through versioned development
 
