@@ -2,11 +2,11 @@
 
 A desktop calculator built with **Python** and **Tkinter** to practice software design, event-driven programming, GUI development, and incremental software architecture.
 
-The project began as a **terminal-based calculator (v1.0)**, evolved into a **Tkinter desktop application (v2.0)**, introduced a dedicated **calculator engine with state management (v3.0)**, and was refactored into a cleaner, data-driven GUI architecture in **v3.1**.
+The project began as a **terminal-based calculator (v1.0)**, evolved into a **Tkinter desktop application (v2.0)**, introduced a dedicated **calculator engine with state management (v3.0)**, was refactored into a cleaner, data-driven GUI architecture in **v3.1**, and further enhanced with **keyboard support, Clear Entry (CE), repeated equals behavior, improved operator handling, and UI refinements in v3.2**.
 
 ![Status](https://img.shields.io/badge/Status-Active_Development-brightgreen)
 ![Python](https://img.shields.io/badge/Python-3.14.3-blue?logo=python&logoColor=white)
-![Version](https://img.shields.io/badge/Version-v3.1-orange)
+![Version](https://img.shields.io/badge/Version-v3.2-orange)
 ![GUI](https://img.shields.io/badge/GUI-Tkinter-green)
 ![License](https://img.shields.io/badge/License-MIT-purple)
 ![Last Commit](https://img.shields.io/github/last-commit/AradhyaMaheshwari-bit/python-simple-calculator)
@@ -27,7 +27,7 @@ The project began as a **terminal-based calculator (v1.0)**, evolved into a **Tk
 - 🧹 All Clear (AC)
 - 🔢 Decimal number support
 - 🚫 Prevents multiple decimal points
-- 📄 Displays current calculation expression
+- 📄 Live expression display
 - 🎯 Automatic input state management
 - ⚠️ Division-by-zero handling
 - 🔁 Error recovery
@@ -36,6 +36,12 @@ The project began as a **terminal-based calculator (v1.0)**, evolved into a **Tk
 - 🧩 Modular architecture
 - ⚙️ Data-driven button generation
 - 🏷️ Button metadata for scalable GUI behavior
+- ⌨️ Keyboard shortcuts
+- 🔁 Repeated equals (`=`)
+- 🧹 Clear Entry (CE)
+- 🔄 Operator replacement
+- 🪟 Custom application window icon
+- ⌨️ Numpad support
 
 ---
 
@@ -43,12 +49,13 @@ The project began as a **terminal-based calculator (v1.0)**, evolved into a **Tk
 
 - Python 3
 - Tkinter
+- Git & GitHub
 
 ---
 
 ## 📚 Concepts Practiced
 
-- Object-Oriented Programming (calculator engine)
+- Object-Oriented Design (calculator engine)
 - State Management
 - Event-driven Programming
 - Callback Functions
@@ -63,6 +70,11 @@ The project began as a **terminal-based calculator (v1.0)**, evolved into a **Tk
 - Tkinter GUI Development
 - Layout Management (`pack()` & `grid()`)
 - Git & GitHub Workflow
+- Keyboard Event Handling
+- Dictionary Dispatch Pattern
+- State Machine Design
+- GUI Metadata Configuration
+- UI/UX Polish
 
 ---
 
@@ -92,6 +104,8 @@ python main.py
 
 ```text
 python-simple-calculator/
+├── assets/
+│   └── icon.ico
 ├── modules/
 │   ├── calculator.py
 │   └── operations.py
@@ -143,17 +157,28 @@ python-simple-calculator/
 - Improved callback organization
 - Cleaner and more maintainable architecture
 
----
-
-## 🔮 Roadmap
-
 ### v3.2 — Keyboard & UX Improvements
 
 - Keyboard shortcuts
+- Numpad support
 - Repeated equals (`=`)
-- Improved chain operations
-- Better operator replacement
-- General usability improvements
+- Clear Entry (CE)
+- Operator replacement
+- Custom window icon
+- Improved expression alignment
+- Improved button layout
+- Dictionary-based operation dispatch
+- Additional UI polish
+
+---
+
+## 📸 Screenshot
+
+![GUI Calculator](assets/screenshot.png)
+
+---
+
+## 🔮 Roadmap
 
 ### v4.0 — Object-Oriented GUI
 
@@ -197,6 +222,10 @@ This project helped me understand:
 - Exception handling and recovery
 - Writing maintainable, incremental Git commits
 - Organizing a project through versioned development
+- Designing reusable state machines
+- Dictionary-based dispatch
+- Keyboard event handling
+- Building data-driven user interfaces
 
 ---
 
