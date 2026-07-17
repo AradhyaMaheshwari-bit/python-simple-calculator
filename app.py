@@ -13,6 +13,7 @@ def create_app():
 
     root = tk.Tk()
     root.title("Simple Calculator")
+    root.iconbitmap("assets/icon.ico")
     root.geometry("420x320")
     root.resizable(False, False)
     calc = Calculator()
