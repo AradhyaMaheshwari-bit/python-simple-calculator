@@ -56,24 +56,24 @@ def create_app():
     buttons_frame.pack(pady=10)
 
     buttons = [
-        {"text": "AC", "type": "clear", "row": 0, "column": 0, "width": 12, "columnspan": 2},
-        {"text": "⌫", "type": "backspace", "row": 0, "column": 2},
-        {"text": "÷", "type": "operator", "row": 0, "column": 3},
-        {"text": "7", "type": "digit", "row": 1, "column": 0},
-        {"text": "8", "type": "digit", "row": 1, "column": 1},
-        {"text": "9", "type": "digit", "row": 1, "column": 2},
-        {"text": "×", "type": "operator", "row": 1, "column": 3},
-        {"text": "4", "type": "digit", "row": 2, "column": 0},
-        {"text": "5", "type": "digit", "row": 2, "column": 1},
-        {"text": "6", "type": "digit", "row": 2, "column": 2},
-        {"text": "-", "type": "operator", "row": 2, "column": 3},
-        {"text": "1", "type": "digit", "row": 3, "column": 0},
-        {"text": "2", "type": "digit", "row": 3, "column": 1},
-        {"text": "3", "type": "digit", "row": 3, "column": 2},
-        {"text": "+", "type": "operator", "row": 3, "column": 3},
-        {"text": "0", "type": "digit", "row": 4, "column": 0, "width": 12, "columnspan": 2},
-        {"text": ".", "type": "digit", "row": 4, "column": 2},
-        {"text": "=", "type": "equal", "row": 4, "column": 3},
+        {"text": "AC", "type": "clear", "keys": ["Escape"], "row": 0, "column": 0, "width": 12, "columnspan": 2},
+        {"text": "⌫", "type": "backspace", "keys": ["BackSpace"], "row": 0, "column": 2},
+        {"text": "÷", "type": "operator", "keys": ["slash"], "row": 0, "column": 3},
+        {"text": "7", "type": "digit", "keys": ["7"], "row": 1, "column": 0},
+        {"text": "8", "type": "digit", "keys": ["8"], "row": 1, "column": 1},
+        {"text": "9", "type": "digit", "keys": ["9"], "row": 1, "column": 2},
+        {"text": "×", "type": "operator", "keys": ["asterisk"], "row": 1, "column": 3},
+        {"text": "4", "type": "digit", "keys": ["4"], "row": 2, "column": 0},
+        {"text": "5", "type": "digit", "keys": ["5"], "row": 2, "column": 1},
+        {"text": "6", "type": "digit", "keys": ["6"], "row": 2, "column": 2},
+        {"text": "-", "type": "operator", "keys": ["minus"], "row": 2, "column": 3},
+        {"text": "1", "type": "digit", "keys": ["1"],"row": 3, "column": 0},
+        {"text": "2", "type": "digit", "keys": ["2"], "row": 3, "column": 1},
+        {"text": "3", "type": "digit", "keys": ["3"], "row": 3, "column": 2},
+        {"text": "+", "type": "operator", "keys": ["plus"],  "row": 3, "column": 3},
+        {"text": "0", "type": "digit", "keys": ["0"], "row": 4, "column": 0, "width": 12, "columnspan": 2},
+        {"text": ".", "type": "digit", "keys": ["period"], "row": 4, "column": 2},
+        {"text": "=", "type": "equal", "keys": ["Return", "equal"], "row": 4, "column": 3},
     ]
 
     def digit_pressed(digit):
@@ -102,6 +102,8 @@ def create_app():
         except ZeroDivisionError as error:
             handle_error(error)
 
+    key_commands = {}
+
     for button in buttons:
         button_type = button["type"]
         button_text = button["text"]
@@ -115,6 +117,15 @@ def create_app():
             command = backspace_pressed
         elif button_type == "equal":
             command = equal_pressed
+        for key in button["keys"]:
+            key_commands[key] = command
         tk.Button(buttons_frame, text=button_text, width=button.get("width", 5), command=command).grid(row=button["row"], column=button["column"], columnspan = button.get("columnspan", 1))
+
+    def key_pressed(event):
+        command = key_commands.get(event.keysym)
+        if command:
+            command()
+
+    root.bind("<Key>", key_pressed)
 
     return root
