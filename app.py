@@ -14,7 +14,7 @@ def create_app():
     root = tk.Tk()
     root.title("Simple Calculator")
     root.iconbitmap("assets/icon.ico")
-    root.geometry("420x320")
+    root.geometry("420x350")
     root.resizable(False, False)
     calc = Calculator()
 
@@ -73,7 +73,7 @@ def create_app():
         {"text": "2", "type": "digit", "keys": ["2"], "row": 3, "column": 1},
         {"text": "3", "type": "digit", "keys": ["3"], "row": 3, "column": 2},
         {"text": "+", "type": "operator", "keys": ["plus"],  "row": 3, "column": 3},
-        {"text": "0", "type": "digit", "keys": ["0"], "row": 4, "column": 0, "width": 12, "columnspan": 2},
+        {"text": "0", "type": "digit", "keys": ["0"], "row": 4, "column": 0, "width": 18, "columnspan": 2},
         {"text": ".", "type": "digit", "keys": ["period"], "row": 4, "column": 2},
         {"text": "=", "type": "equal", "keys": ["Return", "equal"], "row": 4, "column": 3},
     ]
@@ -128,7 +128,7 @@ def create_app():
             command = equal_pressed
         for key in button["keys"]:
             key_commands[key] = command
-        tk.Button(buttons_frame, text=button_text, width=button.get("width", 5), command=command).grid(row=button["row"], column=button["column"], columnspan = button.get("columnspan", 1))
+        tk.Button(buttons_frame, text=button_text, width=button.get("width", 8), height= 2, command=command).grid(row=button["row"], column=button["column"], columnspan = button.get("columnspan", 1))
 
     def key_pressed(event):
         command = key_commands.get(event.keysym)
