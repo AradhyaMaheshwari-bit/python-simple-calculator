@@ -14,42 +14,41 @@ def create_app():
     root.resizable(False, False)
     calc = Calculator()
 
-    def digit_pressed(digit):
-        calc.press_digit(digit)
+    def update_display():
         display_text.set(calc.display)
         expression_label.config(text=calc.expression)
+
+    def handle_error(error):
+        calc.display = str(error)
+        calc.error_state = True
+        calc.expression = ""
+        update_display()
+
+    def digit_pressed(digit):
+        calc.press_digit(digit)
+        update_display()
 
     def clear_pressed():
         calc.press_clear()
-        display_text.set(calc.display)
-        expression_label.config(text=calc.expression)
+        update_display()
 
     def backspace_pressed():
         calc.press_backspace()
-        display_text.set(calc.display)
-        expression_label.config(text=calc.expression)
+        update_display()
 
     def operator_pressed(operator):
         try:
             calc.press_operator(operator)
-            display_text.set(calc.display)
-            expression_label.config(text=calc.expression)
-        except ZeroDivisionError as e:
-                display_text.set(f"{e}")
-                calc.error_state = True
-                calc.expression = ""
-                expression_label.config(text=calc.expression)
+            update_display()
+        except ZeroDivisionError as error:
+                handle_error(error)
 
     def equal_pressed():
         try:
             calc.press_equal()
-            display_text.set(calc.display)
-            expression_label.config(text=calc.expression)
-        except ZeroDivisionError as e:
-                display_text.set(f"{e}")
-                calc.error_state = True
-                calc.expression = ""
-                expression_label.config(text=calc.expression)
+            update_display()
+        except ZeroDivisionError as error:
+                handle_error(error)
 
     # ============
     # Display area
