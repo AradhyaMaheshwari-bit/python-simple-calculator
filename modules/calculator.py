@@ -17,6 +17,8 @@ class Calculator:
         self.waiting_for_new_number = False
         self.error_state = False
         self.expression = ""
+        self.last_operator = None
+        self.last_operand = None
 
     def press_digit(self, digit):
             if self.error_state:
@@ -50,6 +52,8 @@ class Calculator:
         self.waiting_for_new_number = False
         self.error_state = False
         self.expression = ""
+        self.last_operator = None
+        self.last_operand = None
 
     def press_backspace(self):
         '''
@@ -97,12 +101,18 @@ class Calculator:
                 self.press_clear()
         if self.pending_operator is not None:
             self.expression = f"{self._format_result(self.stored_value)} {self.pending_operator} {self.display} ="
+            self.last_operator = self.pending_operator
+            self.last_operand = float(self.display)
             self._evaluate_pending_operation()
-
+        elif self.last_operator is not None:
+            self.stored_value = float(self.display)
+            self.pending_operator = self.last_operator
+            self.display = self._format_result(self.last_operand)
+            self.expression = f"{self._format_result(self.stored_value)} {self.pending_operator} {self.display} ="
+            self._evaluate_pending_operation()
         self.stored_value = None
         self.pending_operator = None
         self.waiting_for_new_number = True
-
 
     def _format_result(self, result):
         if result.is_integer():
