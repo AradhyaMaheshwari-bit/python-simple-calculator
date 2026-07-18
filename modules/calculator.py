@@ -19,6 +19,7 @@ class Calculator:
         self.expression = ""
         self.last_operator = None
         self.last_operand = None
+        self.expression_percent_operand = None
 
     def press_digit(self, digit):
             if self.error_state:
@@ -54,6 +55,7 @@ class Calculator:
         self.expression = ""
         self.last_operator = None
         self.last_operand = None
+        self.expression_percent_operand = None
 
     def press_clear_entry(self):
         self.display = "0"
@@ -86,7 +88,23 @@ class Calculator:
             self._evaluate_pending_operation()
         self.pending_operator = operator
         self.waiting_for_new_number = True
-        self.expression = f"{self._format_result(self.stored_value)} {self.pending_operator}"
+        if self.expression_percent_operand is None:
+            self.expression = f"{self._format_result(self.stored_value)} {self.pending_operator}"
+        else:
+            self.expression = f"{self.expression_percent_operand} {self.pending_operator}"
+            self.expression_percent_operand = None
+
+    def press_percent(self):
+        if self.error_state:
+            return
+        self.expression_percent_operand = f"{self.display}%"
+        current_value = float(self.display)
+        if self.pending_operator is None or self.pending_operator in ["×", "÷"]:
+            self.display = self._format_result(current_value/100)
+            return
+        if self.pending_operator in ["+", "-"]:
+            percent = self.stored_value * current_value / 100
+            self.display = self._format_result(percent)
 
     def _evaluate_pending_operation(self):
         operations = {
@@ -106,7 +124,11 @@ class Calculator:
         if self.error_state:
                 self.press_clear()
         if self.pending_operator is not None:
-            self.expression = f"{self._format_result(self.stored_value)} {self.pending_operator} {self.display} ="
+            if self.expression_percent_operand is None:
+                self.expression = f"{self._format_result(self.stored_value)} {self.pending_operator} {self.display} ="
+            else:
+                self.expression = f"{self._format_result(self.stored_value)} {self.pending_operator} {self.expression_percent_operand} ="
+                self.expression_percent_operand = None
             self.last_operator = self.pending_operator
             self.last_operand = float(self.display)
             self._evaluate_pending_operation()
@@ -114,7 +136,11 @@ class Calculator:
             self.stored_value = float(self.display)
             self.pending_operator = self.last_operator
             self.display = self._format_result(self.last_operand)
-            self.expression = f"{self._format_result(self.stored_value)} {self.pending_operator} {self.display} ="
+            if self.expression_percent_operand is None:
+                self.expression = f"{self._format_result(self.stored_value)} {self.pending_operator} {self.display} ="
+            else:
+                self.expression = f"{self._format_result(self.stored_value)} {self.pending_operator} {self.expression_percent_operand} ="
+                self.expression_percent_operand = None
             self._evaluate_pending_operation()
         self.stored_value = None
         self.pending_operator = None

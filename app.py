@@ -61,7 +61,7 @@ class CalculatorApp:
     def update_fonts(self, event=None):
         if event and event.widget is not self.root:
             return
-        
+
         width = self.root.winfo_width()
         height = self.root.winfo_height()
 
@@ -108,7 +108,7 @@ class CalculatorApp:
             {"text": "2", "type": "digit", "keys": ["2"], "row": 3, "column": 1},
             {"text": "3", "type": "digit", "keys": ["3"], "row": 3, "column": 2},
             {"text": "+", "type": "operator", "keys": ["plus"],  "row": 3, "column": 3},
-            {"text": "%", "type": "operator", "keys": ["percent"], "row": 4, "column": 0,},
+            {"text": "%", "type": "percent", "keys": ["percent"], "row": 4, "column": 0,},
             {"text": "0", "type": "digit", "keys": ["0"], "row": 4, "column": 1,},
             {"text": ".", "type": "digit", "keys": ["period"], "row": 4, "column": 2},
             {"text": "=", "type": "equal", "keys": ["Return", "equal"], "row": 4, "column": 3},
@@ -133,6 +133,8 @@ class CalculatorApp:
                 command = self.backspace_pressed
             elif button_type == "equal":
                 command = self.equal_pressed
+            elif button_type == "percent":
+                command = self.percent_pressed
             for key in _button["keys"]:
                 self.key_commands[key] = command
             button = tk.Button(
@@ -171,6 +173,10 @@ class CalculatorApp:
             self.update_display()
         except ZeroDivisionError as error:
                 self.handle_error(error)
+
+    def percent_pressed(self):
+        self.calc.press_percent()
+        self.update_display()
 
     def clear_pressed(self):
         self.calc.press_clear()
