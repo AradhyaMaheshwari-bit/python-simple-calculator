@@ -1,8 +1,8 @@
-from app import create_app
+from app import CalculatorApp
 
 def main():
-    app = create_app()
-    app.mainloop()
+    app = CalculatorApp()
+    app.root.mainloop()
 
 if __name__ == "__main__":
     main()
