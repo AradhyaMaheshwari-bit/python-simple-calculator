@@ -2,7 +2,7 @@ from app import CalculatorApp
 
 def main():
     app = CalculatorApp()
-    app.root.mainloop()
+    app.run()
 
 if __name__ == "__main__":
     main()

@@ -10,55 +10,45 @@ import tkinter as tk
 from modules.calculator import Calculator
 
 class CalculatorApp:
+
     def __init__(self):
-        self.root = tk.Tk()
+        self.configure_window()
         self.calc = Calculator()
+        self.create_display()
+        self.create_buttons()
+        self.root.bind("<Key>", self.key_pressed)
+        self.update_display()
 
-    def create_app(self):
+    def run(self):
+        self.root.mainloop()
 
-        root = tk.Tk()
-        root.title("Simple Calculator")
-        root.iconbitmap("assets/icon.ico")
-        root.geometry("420x350")
-        root.resizable(False, False)
-        calc = Calculator()
+    def configure_window(self):
+        self.root = tk.Tk()
+        self.root.title("Simple Calculator")
+        self.root.iconbitmap("assets/icon.ico")
+        self.root.geometry("420x350")
+        self.root.resizable(False, False)
 
-        # ============
-        # Display area
-        # ============
-
-        display_frame = tk.Frame(root)
+    def create_display(self):
+        display_frame = tk.Frame(self.root)
         display_frame.pack(padx=20)
 
-        def update_display():
-            display_text.set(calc.display)
-            expression_label.config(text=calc.expression)
+        self.expression_label = tk.Label(display_frame, text=self.calc.expression, anchor="e", justify="right",)
+        self.expression_label.grid(row=0, column=1, pady=5, sticky="ew")
 
-        def handle_error(error):
-            calc.display = str(error)
-            calc.error_state = True
-            calc.expression = ""
-            update_display()
-
-        expression_label = tk.Label(display_frame, text=calc.expression, anchor="e", justify="right",)
-        expression_label.grid(row=0, column=1, pady=5, sticky="ew")
-
-        display_text = tk.StringVar()
+        self.display_text = tk.StringVar()
         display_entry = tk.Entry(
             display_frame,
-            textvariable=display_text,
+            textvariable=self.display_text,
             width=25,
             justify="right",
             font=("Segoe UI", 16)
         )
         display_entry.grid(row=1, column=1, pady=5)
-        display_text.set(calc.display)
+        self.display_text.set(self.calc.display)
 
-        # ==============
-        # Buttons area
-        # ==============
-
-        buttons_frame = tk.Frame(root)
+    def create_buttons(self):
+        buttons_frame = tk.Frame(self.root)
         buttons_frame.pack(pady=10)
 
         buttons = [
@@ -83,63 +73,69 @@ class CalculatorApp:
             {"text": "=", "type": "equal", "keys": ["Return", "equal"], "row": 4, "column": 3},
         ]
 
-        def digit_pressed(digit):
-            calc.press_digit(digit)
-            update_display()
-
-        def clear_pressed():
-            calc.press_clear()
-            update_display()
-
-        def clear_entry_pressed():
-            calc.press_clear_entry()
-            update_display()
-
-        def backspace_pressed():
-            calc.press_backspace()
-            update_display()
-
-        def operator_pressed(operator):
-            try:
-                calc.press_operator(operator)
-                update_display()
-            except ZeroDivisionError as error:
-                handle_error(error)
-
-        def equal_pressed():
-            try:
-                calc.press_equal()
-                update_display()
-            except ZeroDivisionError as error:
-                handle_error(error)
-
-        key_commands = {}
+        self.key_commands = {}
 
         for button in buttons:
             button_type = button["type"]
             button_text = button["text"]
             if button_type == "digit":
-                command = lambda text=button_text: digit_pressed(text)
+                command = lambda text=button_text: self.digit_pressed(text)
             elif button_type == "operator":
-                command = lambda text=button_text: operator_pressed(text)
+                command = lambda text=button_text: self.operator_pressed(text)
             elif button_type == "clear":
                 if button["mode"] == "all":
-                    command = clear_pressed
+                    command = self.clear_pressed
                 else:
-                    command = clear_entry_pressed
+                    command = self.clear_entry_pressed
             elif button_type == "backspace":
-                command = backspace_pressed
+                command = self.backspace_pressed
             elif button_type == "equal":
-                command = equal_pressed
+                command = self.equal_pressed
             for key in button["keys"]:
-                key_commands[key] = command
-            tk.Button(buttons_frame, text=button_text, width=button.get("width", 8), height= 2, command=command).grid(row=button["row"], column=button["column"], columnspan = button.get("columnspan", 1))
+                self.key_commands[key] = command
+            tk.Button(buttons_frame, text=button_text, width=button.get("width", 8), height=2, command=command).grid(row=button["row"], column=button["column"], columnspan=button.get("columnspan", 1))
 
-        def key_pressed(event):
-            command = key_commands.get(event.keysym)
-            if command:
-                command()
+    def update_display(self):
+        self.display_text.set(self.calc.display)
+        self.expression_label.config(text=self.calc.expression)
 
-        root.bind("<Key>", key_pressed)
+    def handle_error(self, error):
+        self.calc.display = str(error)
+        self.calc.error_state = True
+        self.calc.expression = ""
+        self.update_display()
 
-        return root
+    def digit_pressed(self, digit):
+        self.calc.press_digit(digit)
+        self.update_display()
+
+    def operator_pressed(self, operator):
+        try:
+            self.calc.press_operator(operator)
+            self.update_display()
+        except ZeroDivisionError as error:
+                self.handle_error(error)
+
+    def clear_pressed(self):
+        self.calc.press_clear()
+        self.update_display()
+
+    def clear_entry_pressed(self):
+        self.calc.press_clear_entry()
+        self.update_display()
+
+    def backspace_pressed(self):
+        self.calc.press_backspace()
+        self.update_display()
+
+    def equal_pressed(self):
+        try:
+            self.calc.press_equal()
+            self.update_display()
+        except ZeroDivisionError as error:
+            self.handle_error(error)
+
+    def key_pressed(self, event):
+        command = self.key_commands.get(event.keysym)
+        if command:
+            command()
