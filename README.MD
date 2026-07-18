@@ -2,11 +2,11 @@
 
 A desktop calculator built with **Python** and **Tkinter** to practice software design, event-driven programming, GUI development, and incremental software architecture.
 
-The project began as a **terminal-based calculator (v1.0)**, evolved into a **Tkinter desktop application (v2.0)**, introduced a dedicated **calculator engine with state management (v3.0)**, was refactored into a cleaner, data-driven GUI architecture in **v3.1**, and further enhanced with **keyboard support, Clear Entry (CE), repeated equals behavior, improved operator handling, and UI refinements in v3.2**.
+The project began as a **terminal-based calculator (v1.0)**, evolved into a **Tkinter desktop application (v2.0)**, introduced a dedicated **calculator engine with state management (v3.0)**, adopted a **data-driven GUI architecture (v3.1)**, added **keyboard support and calculator usability improvements (v3.2)**, and was finally refactored into a clean **object-oriented GUI architecture (v4.0)** with improved separation of responsibilities and maintainability.
 
-![Status](https://img.shields.io/badge/Status-Active_Development-brightgreen)
+![Status](https://img.shields.io/badge/Status-Stable-brightgreen)
 ![Python](https://img.shields.io/badge/Python-3.14.3-blue?logo=python&logoColor=white)
-![Version](https://img.shields.io/badge/Version-v3.2-orange)
+![Version](https://img.shields.io/badge/Version-v4.0-orange)
 ![GUI](https://img.shields.io/badge/GUI-Tkinter-green)
 ![License](https://img.shields.io/badge/License-MIT-purple)
 ![Last Commit](https://img.shields.io/github/last-commit/AradhyaMaheshwari-bit/python-simple-calculator)
@@ -15,39 +15,53 @@ The project began as a **terminal-based calculator (v1.0)**, evolved into a **Tk
 
 ## ✨ Features
 
-### Calculator
+### Core Operations
 
 - ➕ Addition
 - ➖ Subtraction
 - ✖️ Multiplication
 - ➗ Division
-- 🔢 Calculator-style digit input
 - 🔄 Sequential calculations
-- ⌫ Backspace support
-- 🧹 All Clear (AC)
+- 🔁 Repeated equals (`=`)
+- 🔄 Operator replacement
+
+### Input & Editing
+
+- 🔢 Calculator-style digit input
 - 🔢 Decimal number support
 - 🚫 Prevents multiple decimal points
+- ⌫ Backspace support
+- 🧹 All Clear (AC)
+- 🧹 Clear Entry (CE)
+
+### Display & Error Handling
+
 - 📄 Live expression display
 - 🎯 Automatic input state management
+- ✨ Clean result formatting (e.g. `12` instead of `12.0`)
 - ⚠️ Division-by-zero handling
 - 🔁 Error recovery
-- ✨ Clean result formatting (e.g. `12` instead of `12.0`)
-- 🖥️ Desktop GUI built with Tkinter
+
+### User Experience
+
+- ⌨️ Keyboard shortcuts
+- ⌨️ Numpad support
+- 🪟 Custom application window icon
+- 🔠 Responsive font scaling
+
+### Architecture
+
+- 🧱 Object-oriented GUI architecture
 - 🧩 Modular architecture
 - ⚙️ Data-driven button generation
 - 🏷️ Button metadata for scalable GUI behavior
-- ⌨️ Keyboard shortcuts
-- 🔁 Repeated equals (`=`)
-- 🧹 Clear Entry (CE)
-- 🔄 Operator replacement
-- 🪟 Custom application window icon
-- ⌨️ Numpad support
+- 🖥️ Desktop GUI built with Tkinter
 
 ---
 
 ## 🛠 Technologies Used
 
-- Python 3
+- Python 3.14
 - Tkinter
 - Git & GitHub
 
@@ -55,25 +69,38 @@ The project began as a **terminal-based calculator (v1.0)**, evolved into a **Tk
 
 ## 📚 Concepts Practiced
 
-- Object-Oriented Design (calculator engine)
+### Software Design
+
+- Object-Oriented Design (Calculator Engine)
+- Object-Oriented GUI Design
+- Class-based GUI Architecture
+- Modular Programming
+- Separation of Concerns
 - State Management
+- State Machine Design
+
+### GUI Development
+
+- Tkinter GUI Development
 - Event-driven Programming
 - Callback Functions
+- Keyboard Event Handling
+- Layout Management (`pack()` & `grid()`)
+- GUI Refactoring
+- GUI Metadata Configuration
+
+### Python Concepts
+
 - Lambda Functions & Closures
 - Exception Handling
 - Helper Functions
 - Data-driven Programming
 - Dictionary-based Configuration
-- Modular Programming
-- Separation of Concerns
-- GUI Refactoring
-- Tkinter GUI Development
-- Layout Management (`pack()` & `grid()`)
-- Git & GitHub Workflow
-- Keyboard Event Handling
 - Dictionary Dispatch Pattern
-- State Machine Design
-- GUI Metadata Configuration
+
+### Development Workflow
+
+- Git & GitHub Workflow
 - UI/UX Polish
 
 ---
@@ -105,7 +132,8 @@ python main.py
 ```text
 python-simple-calculator/
 ├── assets/
-│   └── icon.ico
+│   ├── icon.ico
+│   └── screenshot.png
 ├── modules/
 │   ├── calculator.py
 │   └── operations.py
@@ -146,7 +174,7 @@ python-simple-calculator/
 - Backspace support
 - Improved modular architecture
 
-### v3.1 — GUI Refactoring & UI Polish
+### v3.1 — Data-Driven GUI Refactoring
 
 - Centralized display updates
 - Centralized error handling
@@ -157,7 +185,7 @@ python-simple-calculator/
 - Improved callback organization
 - Cleaner and more maintainable architecture
 
-### v3.2 — Keyboard & UX Improvements
+### v3.2 — Keyboard Support & Calculator UX
 
 - Keyboard shortcuts
 - Numpad support
@@ -170,6 +198,17 @@ python-simple-calculator/
 - Dictionary-based operation dispatch
 - Additional UI polish
 
+### v4.0 — Object-Oriented GUI Architecture
+
+- Converted the GUI into a CalculatorApp class
+- Introduced application lifecycle through __init__() and run()
+- Extracted window, display, and button creation into dedicated methods
+- Reorganized GUI callbacks into class methods
+- Centralized keyboard command handling
+- Improved button metadata using clear modes
+- Refined naming and project organization
+- Improved maintainability while preserving calculator behavior
+
 ---
 
 ## 📸 Screenshot
@@ -180,16 +219,13 @@ python-simple-calculator/
 
 ## 🔮 Roadmap
 
-### v4.0 — Object-Oriented GUI
-
-- Convert GUI into a class
-- Improve application architecture
-- Better separation of responsibilities
-
 ### v5.0 — Expression Parser
 
+- Replace immediate evaluation with full expression evaluation
+- Expression tokenizer
+- Expression parser
+- Expression evaluator
 - BODMAS / operator precedence
-- Expression evaluation without `eval()`
 - Parentheses support
 
 ### v5.1 — Scientific Calculator
@@ -212,19 +248,28 @@ python-simple-calculator/
 
 This project helped me understand:
 
+### Software Architecture
+
 - Designing modular Python applications
+- Designing class-based GUI applications
+- Separating business logic from the GUI through a layered architecture
+- Building maintainable event-driven applications
+
+### Programming Concepts
+
 - Building a calculator state machine
-- Separating business logic from the GUI
+- Designing reusable state machines
 - Data-driven GUI design
 - Event-driven programming with Tkinter
 - Lambda closures and callback handling
-- Refactoring for maintainability
 - Exception handling and recovery
-- Writing maintainable, incremental Git commits
-- Organizing a project through versioned development
-- Designing reusable state machines
 - Dictionary-based dispatch
-- Keyboard event handling
+
+### Software Development
+
+- Organizing a project through versioned development
+- Refactoring for maintainability
+- Writing maintainable, incremental Git commits
 - Building data-driven user interfaces
 
 ---
