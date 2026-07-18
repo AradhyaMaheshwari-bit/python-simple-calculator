@@ -13,7 +13,7 @@ class CalculatorApp:
 
     def __init__(self):
         self.configure_window()
-        self.calc = Calculator()
+        self.calculator = Calculator()
         self.create_display()
         self.create_buttons()
         self.last_size = None
@@ -41,7 +41,7 @@ class CalculatorApp:
 
         self.expression_label = tk.Label(
             display_frame,
-            text=self.calc.expression,
+            text=self.calculator.expression,
             font=("Segoe UI", 14),
             anchor="e",
             justify="right"
@@ -56,7 +56,7 @@ class CalculatorApp:
             font=("Segoe UI", 20)
         )
         self.display_entry.grid(row=1, column=0, pady=5, sticky="ew", padx=5)
-        self.display_text.set(self.calc.display)
+        self.display_text.set(self.calculator.display)
 
     def update_fonts(self, event=None):
         if event and event.widget is not self.root:
@@ -79,7 +79,7 @@ class CalculatorApp:
         self.display_entry.config(font=("Segoe UI", display_size))
         self.expression_label.config(font=("Segoe UI", expression_size))
 
-        for button in self.buttons:
+        for button in self.button_widgets:
             button.config(font=("Segoe UI", button_size))
 
     def create_buttons(self):
@@ -91,10 +91,10 @@ class CalculatorApp:
         for i in range(5):
             buttons_frame.grid_rowconfigure(i, weight=1)
 
-        BUTTONS = [
+        BUTTON_CONFIG = [
             {"text": "AC", "type": "clear", "mode": "all", "keys": ["Escape"], "row": 0, "column": 0},
             {"text": "CE", "type": "clear", "mode": "entry", "keys": ["grave"], "row": 0, "column": 1},
-            {"text": "⌫", "type": "backspace", "keys": ["BackSpace"], "row": 0, "column": 2},
+            {"text": "⌫", "type": "clear", "mode": "backspace", "keys": ["BackSpace"], "row": 0, "column": 2},
             {"text": "÷", "type": "operator", "keys": ["slash"], "row": 0, "column": 3},
             {"text": "7", "type": "digit", "keys": ["7"], "row": 1, "column": 0},
             {"text": "8", "type": "digit", "keys": ["8"], "row": 1, "column": 1},
@@ -114,28 +114,29 @@ class CalculatorApp:
             {"text": "=", "type": "equal", "keys": ["Return", "equal"], "row": 4, "column": 3},
         ]
 
-        self.buttons = []
+        self.button_widgets = []
         self.key_commands = {}
 
-        for _button in BUTTONS:
-            button_type = _button["type"]
-            button_text = _button["text"]
+        for config in BUTTON_CONFIG:
+            button_type = config["type"]
+            button_text = config["text"]
             if button_type == "digit":
                 command = lambda text=button_text: self.digit_pressed(text)
             elif button_type == "operator":
                 command = lambda text=button_text: self.operator_pressed(text)
             elif button_type == "clear":
-                if _button["mode"] == "all":
-                    command = self.clear_pressed
-                else:
-                    command = self.clear_entry_pressed
-            elif button_type == "backspace":
-                command = self.backspace_pressed
+                match config["mode"]:
+                    case "all":
+                        command = self.clear_pressed
+                    case "entry":
+                        command = self.clear_entry_pressed
+                    case "backspace":
+                        command = self.backspace_pressed
             elif button_type == "equal":
                 command = self.equal_pressed
             elif button_type == "percent":
                 command = self.percent_pressed
-            for key in _button["keys"]:
+            for key in config["keys"]:
                 self.key_commands[key] = command
             button = tk.Button(
                 buttons_frame,
@@ -144,55 +145,55 @@ class CalculatorApp:
                 command=command
             )
             button.grid(
-                row=_button["row"],
-                column=_button["column"],
-                columnspan=_button.get("columnspan", 1),
+                row=config["row"],
+                column=config["column"],
+                columnspan=config.get("columnspan", 1),
                 sticky="nsew",
                 padx=2,
                 pady=2
             )
-            self.buttons.append(button)
+            self.button_widgets.append(button)
 
     def update_display(self):
-        self.display_text.set(self.calc.display)
-        self.expression_label.config(text=self.calc.expression)
+        self.display_text.set(self.calculator.display)
+        self.expression_label.config(text=self.calculator.expression)
 
     def handle_error(self, error):
-        self.calc.display = str(error)
-        self.calc.error_state = True
-        self.calc.expression = ""
+        self.calculator.display = str(error)
+        self.calculator.error_state = True
+        self.calculator.expression = ""
         self.update_display()
 
     def digit_pressed(self, digit):
-        self.calc.press_digit(digit)
+        self.calculator.press_digit(digit)
         self.update_display()
 
     def operator_pressed(self, operator):
         try:
-            self.calc.press_operator(operator)
+            self.calculator.press_operator(operator)
             self.update_display()
         except ZeroDivisionError as error:
                 self.handle_error(error)
 
     def percent_pressed(self):
-        self.calc.press_percent()
+        self.calculator.press_percent()
         self.update_display()
 
     def clear_pressed(self):
-        self.calc.press_clear()
+        self.calculator.press_clear()
         self.update_display()
 
     def clear_entry_pressed(self):
-        self.calc.press_clear_entry()
+        self.calculator.press_clear_entry()
         self.update_display()
 
     def backspace_pressed(self):
-        self.calc.press_backspace()
+        self.calculator.press_backspace()
         self.update_display()
 
     def equal_pressed(self):
         try:
-            self.calc.press_equal()
+            self.calculator.press_equal()
             self.update_display()
         except ZeroDivisionError as error:
             self.handle_error(error)
