@@ -16,7 +16,9 @@ class CalculatorApp:
         self.calc = Calculator()
         self.create_display()
         self.create_buttons()
+        self.last_size = None
         self.root.bind("<Key>", self.key_pressed)
+        self.root.bind("<Configure>", self.update_fonts)
         self.update_display()
 
     def run(self):
@@ -26,32 +28,70 @@ class CalculatorApp:
         self.root = tk.Tk()
         self.root.title("Simple Calculator")
         self.root.iconbitmap("assets/icon.ico")
-        self.root.geometry("420x350")
-        self.root.resizable(False, False)
+        self.root.geometry("315x300")
+        self.root.minsize(315, 300)
+        self.root.grid_columnconfigure(0, weight=1)
+        self.root.grid_rowconfigure(1, weight=1)
 
     def create_display(self):
-        display_frame = tk.Frame(self.root)
-        display_frame.pack(padx=20)
 
-        self.expression_label = tk.Label(display_frame, text=self.calc.expression, anchor="e", justify="right",)
-        self.expression_label.grid(row=0, column=1, pady=5, sticky="ew")
+        display_frame = tk.Frame(self.root)
+        display_frame.grid(row=0, column=0, sticky="ew")
+        display_frame.grid_columnconfigure(0, weight=1)
+
+        self.expression_label = tk.Label(
+            display_frame,
+            text=self.calc.expression,
+            font=("Segoe UI", 14),
+            anchor="e",
+            justify="right"
+        )
+        self.expression_label.grid(row=0, column=0, pady=5, sticky="ew", padx=5)
 
         self.display_text = tk.StringVar()
-        display_entry = tk.Entry(
+        self.display_entry = tk.Entry(
             display_frame,
             textvariable=self.display_text,
-            width=25,
             justify="right",
-            font=("Segoe UI", 16)
+            font=("Segoe UI", 20)
         )
-        display_entry.grid(row=1, column=1, pady=5)
+        self.display_entry.grid(row=1, column=0, pady=5, sticky="ew", padx=5)
         self.display_text.set(self.calc.display)
+
+    def update_fonts(self, event=None):
+        if event and event.widget is not self.root:
+            return
+        
+        width = self.root.winfo_width()
+        height = self.root.winfo_height()
+
+        if self.last_size == (width, height):
+            return
+        self.last_size = (width, height)
+
+        # smaller dimension to keep scaling balanced
+        scale = min(width, height)
+
+        button_size = max(12, min(28, scale // 18))
+        expression_size = max(14, min(28, scale // 25))
+        display_size = max(20, min(42, scale // 16))
+
+        self.display_entry.config(font=("Segoe UI", display_size))
+        self.expression_label.config(font=("Segoe UI", expression_size))
+
+        for button in self.buttons:
+            button.config(font=("Segoe UI", button_size))
 
     def create_buttons(self):
         buttons_frame = tk.Frame(self.root)
-        buttons_frame.pack(pady=10)
+        buttons_frame.grid(row=1, column=0, sticky="nsew")
 
-        buttons = [
+        for i in range(4):
+            buttons_frame.grid_columnconfigure(i, weight=1)
+        for i in range(5):
+            buttons_frame.grid_rowconfigure(i, weight=1)
+
+        BUTTONS = [
             {"text": "AC", "type": "clear", "mode": "all", "keys": ["Escape"], "row": 0, "column": 0},
             {"text": "CE", "type": "clear", "mode": "entry", "keys": ["grave"], "row": 0, "column": 1},
             {"text": "⌫", "type": "backspace", "keys": ["BackSpace"], "row": 0, "column": 2},
@@ -68,22 +108,24 @@ class CalculatorApp:
             {"text": "2", "type": "digit", "keys": ["2"], "row": 3, "column": 1},
             {"text": "3", "type": "digit", "keys": ["3"], "row": 3, "column": 2},
             {"text": "+", "type": "operator", "keys": ["plus"],  "row": 3, "column": 3},
-            {"text": "0", "type": "digit", "keys": ["0"], "row": 4, "column": 0, "width": 18, "columnspan": 2},
+            {"text": "%", "type": "operator", "keys": ["percent"], "row": 4, "column": 0,},
+            {"text": "0", "type": "digit", "keys": ["0"], "row": 4, "column": 1,},
             {"text": ".", "type": "digit", "keys": ["period"], "row": 4, "column": 2},
             {"text": "=", "type": "equal", "keys": ["Return", "equal"], "row": 4, "column": 3},
         ]
 
+        self.buttons = []
         self.key_commands = {}
 
-        for button in buttons:
-            button_type = button["type"]
-            button_text = button["text"]
+        for _button in BUTTONS:
+            button_type = _button["type"]
+            button_text = _button["text"]
             if button_type == "digit":
                 command = lambda text=button_text: self.digit_pressed(text)
             elif button_type == "operator":
                 command = lambda text=button_text: self.operator_pressed(text)
             elif button_type == "clear":
-                if button["mode"] == "all":
+                if _button["mode"] == "all":
                     command = self.clear_pressed
                 else:
                     command = self.clear_entry_pressed
@@ -91,9 +133,23 @@ class CalculatorApp:
                 command = self.backspace_pressed
             elif button_type == "equal":
                 command = self.equal_pressed
-            for key in button["keys"]:
+            for key in _button["keys"]:
                 self.key_commands[key] = command
-            tk.Button(buttons_frame, text=button_text, width=button.get("width", 8), height=2, command=command).grid(row=button["row"], column=button["column"], columnspan=button.get("columnspan", 1))
+            button = tk.Button(
+                buttons_frame,
+                text=button_text,
+                font=("Segoe UI", 12),
+                command=command
+            )
+            button.grid(
+                row=_button["row"],
+                column=_button["column"],
+                columnspan=_button.get("columnspan", 1),
+                sticky="nsew",
+                padx=2,
+                pady=2
+            )
+            self.buttons.append(button)
 
     def update_display(self):
         self.display_text.set(self.calc.display)
